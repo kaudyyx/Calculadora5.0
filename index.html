@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .calculator-container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            margin-right: 20px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #2185d0;
+        }
+
+        button.clear {
+            background-color: #ff6b6b; /* Cor viva para a tecla de limpar */
+        }
+
+        /* Dark theme */
+        body.dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .calculator-container.dark-mode {
+            background-color: #444;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        button.dark-mode {
+            background-color: #555;
+        }
+
+        button.dark-mode:hover {
+            background-color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <input type="text" id="display" readonly>
+        <div class="buttons">
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button onclick="appendValue('/')">/</button>
+
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button onclick="appendValue('*')">*</button>
+
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button onclick="appendValue('-')">-</button>
+
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button onclick="calculate()">="</button>
+            <button onclick="appendValue('+')">+</button>
+
+            <button onclick="clearDisplay()" class="clear"></button>
+            <button onclick="calculatePercentage()">%</button>
+            <button onclick="toggleDarkMode()">Ativar Modo Escuro</button>
+            <button onclick="clearDisplay()">Apagar</button>
+        </div>
+    </div>
+    <script>
+        let display = document.getElementById('display');
+
+        function appendValue(value) {
+            display.value += value;
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function calculatePercentage() {
+            display.value = eval(display.value + '/100');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('.calculator-container').classList.toggle('dark-mode');
+            document.querySelectorAll('button').forEach(button => button.classList.toggle('dark-mode'));
+
+            // Altera o texto do botão de ativar/desativar modo escuro
+            const darkModeButton = document.querySelector('.calculator-container button:nth-child(17)');
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeButton.innerText = 'Desativar Modo Escuro';
+            } else {
+                darkModeButton.innerText = 'Ativar Modo Escuro';
+            }
+        }
+    </script>
+</body>
+</html>
