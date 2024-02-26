@@ -1,1 +1,0 @@
-# Calculadora5.0
